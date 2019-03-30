@@ -4,6 +4,7 @@
     "description": "Syntax highlighting for JinXML notation",
     "version": "0.0.1",
     "publisher": "sfkleach",
+    "repository": "https://dev.azure.com/jinxml/jinxml-extension/_git/jinxml-extension",
     "engines": {
         "vscode": "^1.32.0"
     },

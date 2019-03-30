@@ -1,0 +1,26 @@
+{
+    "name": "jinxml-extension",
+    "displayName": "JinXML Extension",
+    "description": "Syntax highlighting for JinXML notation",
+    "version": "0.0.1",
+    "publisher": "sfkleach",
+    "engines": {
+        "vscode": "^1.32.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "jinxml",
+            "aliases": ["JinXML", "jinxml"],
+            "extensions": [".jinxml"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "jinxml",
+            "scopeName": "source.jinxml",
+            "path": "./syntaxes/jinxml.tmLanguage.json"
+        }]
+    }
+}

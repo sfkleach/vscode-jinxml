@@ -1,0 +1,198 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"scopeName": "source.jinxml",
+	"name": "JinXML",
+	"patterns": [
+		{ "include": "#expression" }
+	],
+	"repository": {
+		"expression": {
+			"patterns":[
+				{ "include": "#generic-tag" },
+				{ "include": "#array" },
+				{ "include": "#object" },
+				{ "include": "#keyword" },
+				{ "include": "#xstring" },
+				{ "include": "#jstring" },
+				{ "include": "#number" },
+				{ "include": "#eolcomment" },
+				{ "include": "#longcomment" },
+				{ "include": "#xmlcomment" },
+				{ "include": "#xmldiscard" },
+				{ "name": "invalid.illegal.non-starting-characters.jinxml", "match": "[^+:=,;\\s\\w\\/\\'\"\\{\\[\\<]+" },
+				{ "name": "invalid.illegal.identifiers.jinxml", "match": "(?!true|false|null)[\\w]+\\b(?=\\s*[^:+=])" },
+				{ "name": "invalid.illegal.punctuation.jinxml", "match": "[;,]\\s*[;,]+" }
+			]
+		},
+		"eolcomment": {
+			"name": "comment.line.double-slash.jinxml",
+			"match": "//.*$",
+			"patterns":[]
+		},
+		"longcomment": {
+			"name": "comment.line.block.jinxml",
+			"begin": "/\\*",
+			"end": "\\*/",
+			"patterns":[]
+		},
+		"xmlcomment": {
+			"name": "comment.line.block.xml.jinxml",
+			"begin": "<!--",
+			"end": "-->",
+			"patterns":[]
+		},
+		"xmldiscard": {
+			"name": "comment.line.block.xml.discards.jinxml",
+			"begin": "<\\?",
+			"end": "\\?>",
+			"patterns":[]			
+		},
+		"number": {
+			"name": "constant.numeric.jinxml",
+			"match": "[-+]?[0-9]+(?:\\.[0-9]+(?:e[-+]?[0-9]+)?)?",
+			"patterns": []
+		},
+		"array": {
+			"name": "meta.array.jinxml",
+			"begin": "\\[",
+			"end": "\\]",
+			"beginCaptures": {
+			  "0": { "name": "punctuation.definition.array.begin.jinxml" }
+			},
+			"endCaptures": {
+			  "0": { "name": "punctuation.definition.array.end.jinxml" }
+			},
+			"patterns": [
+				{ "include": "#expression" },
+				{ 
+					"name": "invalid.illegal.punctuation.separator.key-value.jinml",
+					"match": "\\+?[:=]"
+				}
+			]
+		},
+		"object": {
+			"name": "meta.object.jinxml",
+			"begin": "\\{",
+			"end": "\\}",
+			"beginCaptures": {
+			  "0": { "name": "definition.object.begin.jinxml" }
+			},
+			"endCaptures": {
+			  "0": { "name": "definition.object.end.jinxml" }
+			},
+			"patterns": [
+				{ "include": "#key" },
+				{ "include": "#key-separator" },
+				{ "include": "#expression" }
+			]
+		},
+		"generic-tag": {
+			"name": "meta.tag.jinxml",
+			"begin": "</?(?![!?])",
+			"end": "/?>",
+			"patterns": [
+				{ "include": "#element-name" },
+				{ "include": "#key" },
+				{ "include": "#key-separator" },
+				{ "include": "#xstring" },
+				{ "include": "#jstring" },
+				{ 
+					"name": "punctuation.separator.attributes.key-value.jinxml",
+					"match": ":|=|\\+:|\\+="
+				}
+			]
+		},
+		"element-name": {
+			"patterns": [
+				{
+					"name": "entity.name.tag.jinxml",
+					"match": "\\w+(?=\\s+[/>\\w]|[/>])"
+				},
+				{
+					"name": "entity.name.tag.ditto.jinxml",
+					"match": "&(?=\\s+[/>\\w]|[/>])"					
+				}
+			]
+		},
+		"key": {
+			"patterns": [
+				{
+					"name": "support.type.property-name.jinxml",
+					"match": "(&|\\w+)(?=\\s*[+:=])"
+				}
+			]
+		},
+		"key-separator": {
+			"patterns": [
+				{
+					"name": "punctuation.separator.key-value.jinml",
+					"match": "\\+?[:=](?!\\s*</)"
+				},
+				{
+					"name": "invalid.illegal.punctuation.separator.key-value.jinml",
+					"match": "\\+?[:=](?=\\s*</)"					
+				}
+			]
+		},
+		"keyword": {
+			"patterns": [{
+				"name": "constant.language.jinxml",
+				"match": "\\b(true|false|null)\\b"
+			}]
+		},
+		"xescape": {
+			"name": "constant.character.escape.jinxml",
+			"patterns": [
+				{ 
+					"name": "constant.character.escape.jinxml", 
+					"match": "\\&[\\w]{1,32};" 
+				},
+				{ 
+					"name": "constant.character.escape.jinxml", 
+					"match": "\\&#(?:\\d+|x\\h+);" 
+				},
+				{ 
+					"name": "constant.character.escape.jinxml", 
+					"match": "\\&\\\\(?:[bfnrt]|u\\h{4})" 
+				},
+				{ 
+					"name": "invalid.illegal.character.escape.jinxml", 
+					"match": "\\&[#\\w\\\\]\\w*(?=[^;\\w])" 
+				},
+				{ 
+					"name": "invalid.illegal.character.escape.jinxml", 
+					"match": "\\&\\\\[^bfnrtu]" 
+				}
+			]
+		},
+		"xstring": {
+			"name": "string.quoted.single.jinxml",
+			"begin": "'",
+			"end": "'",
+			"patterns": [
+				{ "include": "#xescape" }
+			]
+		},
+		"jescape": {
+			"name": "constant.character.escape.jinxml",
+			"patterns": [
+				{ 
+					"name": "constant.character.escape.jinxml",
+					"match": "\\\\(?:[bfnrt]|u\\h{4})"
+				},
+				{ 
+					"name": "invalid.illegal.character.escape.jinxml", 
+					"match": "\\\\[^ubfnrt]" 
+				}
+			]
+		},
+		"jstring": {
+			"name": "string.quoted.double.jinxml",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{ "include": "#jescape" }
+			]
+		}
+	}
+}

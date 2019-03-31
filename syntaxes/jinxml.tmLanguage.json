@@ -2,7 +2,12 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"scopeName": "source.jinxml",
 	"name": "JinXML",
+	"firstLineMatch": "^#![^ ]*\\bjinxml\\b.*$",
 	"patterns": [
+		{ 
+			"name": "comment.line.shebang.jinxml", 
+			"match": "^#![^ ]*\\bjinxml\\b.*$" 
+		},
 		{ "include": "#expression" }
 	],
 	"repository": {
